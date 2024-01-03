@@ -1,0 +1,37 @@
+version: '3'
+services:
+  jenkins-devops:
+    image: 01969/jenkins:v1.0.1
+    container_name: jenkins-devops
+    environment:
+      - NO_PROXY=localhost,127.0.0.1,10.231.186.137,10.231.186.138,sadbogca855,sadbogca854,10.231.186.0/8,.bns,.colpatria.com,registry.colpatria.com,10.236.19.206,bitbucket.agile.bns,192.168.195.110,artifactory.colpatria.bns,10.241.60.18,jira.agile.bns,192.168.195.110,10.241.60.23
+      - TZ=America/Bogota
+      - HTTP_PROXY=latam-proxy-SLV.glb.lnm.bns:8000
+      - HTTPS_PROXY=latam-proxy-SLV.glb.lnm.bns:8000
+      - JAVA_OPTS=-Djavax.net.ssl.trustStore=/opt/java/openjdk/jre/lib/security/cacerts
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    privileged: true
+    volumes:
+      - jenkins-home:/var/jenkins_home
+      - oracle:/usr/local/extra/oracle/instantclient_19_8
+      - liquibase:/usr/apps/Liquibase-4-3-5-bin
+      - libs-unit-test:/usr/apps/libs-unit-test
+      - sonarqube:/usr/local/extra/sonar-scanner-4.2.0.1873-linux
+      - java:/opt/java/openjdk/jre
+      - fortify20:/opt/Fortify/Fortify_SCA_and_Apps_22.2.1
+      - powershell:/opt/powershell
+      - blackduck:/opt/BlackDuck
+    restart: always
+
+volumes:
+  jenkins-home:
+  oracle:
+  liquibase:
+  libs-unit-test:
+  sonarqube:
+  java:
+  fortify20:
+  powershell:
+  blackduck:
